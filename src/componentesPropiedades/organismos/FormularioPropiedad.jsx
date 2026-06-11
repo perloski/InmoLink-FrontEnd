@@ -4,6 +4,7 @@ import DatosPrincipales from '../moleculas/DatosPrincipales';
 import SelectorServicios from '../moleculas/SelectorServicios';
 import GaleriaFotos from '../moleculas/GaleriaFotos';
 import Mapa from '../moleculas/Mapa';
+import { API_URL } from '../../config.js';
 
 export default function FormularioPropiedad({ onSubmit, loading }) {
   const [data, setData] = useState({
@@ -54,7 +55,7 @@ export default function FormularioPropiedad({ onSubmit, loading }) {
       const body = new FormData();
       body.append('image', file);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}api/upload-property-image`, {
+      const res = await fetch(`${API_URL}api/upload-property-image`, {
         method: 'POST',
         credentials: 'include',
         body

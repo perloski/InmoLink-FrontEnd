@@ -1,8 +1,9 @@
-const API_URL = `${import.meta.env.VITE_API_URL}reservation`;
+import { API_URL } from '../config.js';
+const RESERVATION_URL = `${API_URL}reservation`;
 
 export const getReservationsByProperty = async (propertyId) => {
     try {
-        const response = await fetch(`${API_URL}/property/${propertyId}`, {
+        const response = await fetch(`${RESERVATION_URL}/property/${propertyId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -23,7 +24,7 @@ export const getReservationsByProperty = async (propertyId) => {
 
 export const getHostReservations = async () => {
     try {
-        const response = await fetch(`${API_URL}/host`, {
+        const response = await fetch(`${RESERVATION_URL}/host`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -38,7 +39,7 @@ export const getHostReservations = async () => {
 
 export const updateReservationStatus = async (id, status) => {
     try {
-        const response = await fetch(`${API_URL}/${id}`, {
+        const response = await fetch(`${RESERVATION_URL}/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
@@ -54,7 +55,7 @@ export const updateReservationStatus = async (id, status) => {
 
 export const createReservation = async (reservationData) => {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(RESERVATION_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ export const createReservation = async (reservationData) => {
 
 export const getMyReservations = async () => {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(RESERVATION_URL, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

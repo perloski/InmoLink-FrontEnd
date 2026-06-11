@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { API_URL } from '../../config.js';
 export default function RutaProtegida({ children, adminOnly = false }) {
   const [auth, setAuth] = useState(null);
   const [user, setUser] = useState(null);
   const location = useLocation();
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}api/checkOut`, {
+    fetch(`${API_URL}api/checkOut`, {
       credentials: "include"
     })
       .then(res => {

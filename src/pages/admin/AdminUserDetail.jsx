@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import BadgeEstado from "../../componentesAdmin/BadgeEstado";
 import ModalConfirmacion from "../../componentesAdmin/ModalConfirmacion";
 import AdminLayout from "../../componentesAdmin/AdminLayout";
+import { API_URL } from '../../config.js';
 
 export default function AdminUserDetail() {
   const { id } = useParams();
@@ -14,7 +15,6 @@ export default function AdminUserDetail() {
 
   const cargar = async () => {
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
       const res = await fetch(`${API_URL}api/admin/users/${id}`, { credentials: "include" });
       const json = await res.json();
       setData(json);
@@ -27,7 +27,7 @@ export default function AdminUserDetail() {
   useEffect(() => { cargar(); }, [id]);
 
   const cambiarEstadoPropiedad = async (propId, nuevoEstado) => {
-    await fetch(`${import.meta.env.VITE_API_URL}api/admin/properties/${propId}/status`, {
+    await fetch(`${API_URL}api/admin/properties/${propId}/status`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -38,7 +38,7 @@ export default function AdminUserDetail() {
   };
 
   const eliminarPropiedad = async (propId) => {
-    await fetch(`${import.meta.env.VITE_API_URL}api/admin/properties/${propId}`, {
+    await fetch(`${API_URL}api/admin/properties/${propId}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -47,7 +47,7 @@ export default function AdminUserDetail() {
   };
 
   const guardarPropiedad = async (propId, formData) => {
-    await fetch(`${import.meta.env.VITE_API_URL}api/admin/properties/${propId}`, {
+    await fetch(`${API_URL}api/admin/properties/${propId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -58,7 +58,7 @@ export default function AdminUserDetail() {
   };
 
   const actualizarReserva = async (reservaId, nuevoEstado) => {
-    await fetch(`${import.meta.env.VITE_API_URL}api/reservation/${reservaId}`, {
+    await fetch(`${API_URL}api/reservation/${reservaId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

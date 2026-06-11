@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BadgeEstado from "../../componentesAdmin/BadgeEstado";
 import ModalConfirmacion from "../../componentesAdmin/ModalConfirmacion";
+import { API_URL } from '../../config.js';
 
 export default function AdminUsers() {
   const navigate = useNavigate();
@@ -27,7 +28,6 @@ export default function AdminUsers() {
     params.set("limite", 20);
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL;
       const res = await fetch(`${API_URL}api/admin/users?${params}`, { credentials: "include" });
       const data = await res.json();
       setUsuarios(data.usuarios || []);
@@ -43,7 +43,7 @@ export default function AdminUsers() {
   useEffect(() => { cargar(1); }, [busqueda, rol, ordenar]);
 
   const cambiarRol = async (id, nuevoRol) => {
-    await fetch(`${import.meta.env.VITE_API_URL}api/admin/users/${id}/role`, {
+    await fetch(`${API_URL}api/admin/users/${id}/role`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -54,7 +54,7 @@ export default function AdminUsers() {
   };
 
   const eliminar = async (id) => {
-    await fetch(`${import.meta.env.VITE_API_URL}api/admin/users/${id}`, {
+    await fetch(`${API_URL}api/admin/users/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
@@ -63,7 +63,7 @@ export default function AdminUsers() {
   };
 
   /*const guardarUsuario = async (id, data) => {
-    await fetch(`${import.meta.env.VITE_API_URL}api/admin/users/${id}`, {
+    await fetch(`${API_URL}api/admin/users/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

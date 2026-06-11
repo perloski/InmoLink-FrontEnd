@@ -5,6 +5,7 @@ import { obtenerPropiedad, editarPropiedades } from '../servicios/propiedad.serv
 import SelectorServicios from '../componentesPropiedades/moleculas/SelectorServicios';
 import GaleriaFotos from '../componentesPropiedades/moleculas/GaleriaFotos';
 import Mapa from '../componentesPropiedades/moleculas/Mapa';
+import { API_URL } from '../config.js';
 
 export default function EditarPublicacion() {
   const navigate = useNavigate();
@@ -62,7 +63,7 @@ export default function EditarPublicacion() {
       const body = new FormData();
       body.append('image', file);
 
-      const res = await fetch(`${import.meta.env.VITE_API_URL}api/upload-property-image`, {
+      const res = await fetch(`${API_URL}api/upload-property-image`, {
         method: 'POST',
         credentials: 'include',
         body

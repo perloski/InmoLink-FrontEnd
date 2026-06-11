@@ -3,6 +3,7 @@ import Button from "../atomos/Button";
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { LinkText } from "../atomos/LinkText";
+import { API_URL } from '../../config.js';
 
 function RegisterForm() {
     const [form, setForm] = useState({
@@ -23,7 +24,6 @@ function RegisterForm() {
         setLoading(true);
         setError('');
         try {
-            const API_URL = import.meta.env.VITE_API_URL;
             const response = await fetch(`${API_URL}api/register`, {
                 method: 'POST',
                 headers: {
@@ -54,7 +54,7 @@ function RegisterForm() {
 
     const handleGoogleRegister = () => {
         setLoading(true);
-        window.location.href = `${import.meta.env.VITE_API_URL}auth/google`;
+        window.location.href = `${API_URL}auth/google`;
     };
 
     return (

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../componentes/Navbar';
 import { useNavigate } from 'react-router-dom';
 import FormularioPropiedad from '../componentesPropiedades/organismos/FormularioPropiedad';
+import { API_URL } from '../config.js';
 
 const CrearPublicacion = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const CrearPublicacion = () => {
     setError('');
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}properties`, {
+      const response = await fetch(`${API_URL}properties`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

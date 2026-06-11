@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from '../../config.js';
 
 export default function YaLogeado({ children }) {
   const [auth, setAuth] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}api/checkOut`, {
+    fetch(`${API_URL}api/checkOut`, {
       credentials: "include"
     })
       .then(res => {

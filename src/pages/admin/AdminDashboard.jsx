@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_URL } from '../../config.js';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ propiedades: 0, usuarios: 0, pendientes: 0 });
@@ -6,7 +7,6 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const API_URL = import.meta.env.VITE_API_URL;
     Promise.all([
       fetch(`${API_URL}api/admin/properties?limite=1000`, { credentials: "include" }).then((r) => r.json()),
       fetch(`${API_URL}api/admin/users?limite=1000`, { credentials: "include" }).then((r) => r.json()),

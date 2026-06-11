@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../componentes/Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
 import Propiedad from '../componentes/Propiedad.jsx';
+import { API_URL } from '../config.js';
 
 const HomeInmoLink = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const HomeInmoLink = () => {
         pagina: pagina,
         limite: 21
       };
-      const response = await fetch(`${import.meta.env.VITE_API_URL}filtros/properties/filtrar`, {
+      const response = await fetch(`${API_URL}filtros/properties/filtrar`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
       });
       const data = await response.json();

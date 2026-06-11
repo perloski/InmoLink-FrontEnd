@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { API_URL } from '../../config.js';
 
 export default function DiagnosticPage() {
   const [backendStatus, setBackendStatus] = useState('Verificando...');
@@ -7,7 +8,7 @@ export default function DiagnosticPage() {
 
   useEffect(() => {
     // Verificar conexión con backend
-    fetch(`${import.meta.env.VITE_API_URL}api/checkOut`, {
+    fetch(`${API_URL}api/checkOut`, {
       credentials: 'include'
     })
       .then(res => {
@@ -48,10 +49,10 @@ export default function DiagnosticPage() {
       )}
 
       <div className="p-4 bg-blue-100 rounded">
-        <h2 className="font-bold">Puertos esperados:</h2>
+        <h2 className="font-bold">URLs configuradas:</h2>
         <ul>
-          <li>Frontend: {import.meta.env.VITE_API_URL ? 'Producción (Netlify)' : 'http://localhost:5173 o 5174'}</li>
-          <li>Backend: {import.meta.env.VITE_API_URL || 'http://localhost:4000'}</li>
+          <li>Frontend: {window.location.origin}</li>
+          <li>Backend: {API_URL}</li>
         </ul>
       </div>
     </div>
