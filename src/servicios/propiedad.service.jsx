@@ -26,6 +26,18 @@ export const obtenerPropiedad = async (id) => {
     return data;
 }
 
+export const eliminarPropiedad = async (id) => {
+    const response = await fetch(`${API_URL}properties/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+    });
+
+    if (!response.ok) {
+        throw new Error("Error al eliminar la propiedad");
+    }
+    return response.json();
+}
+
 export const editarPropiedades = async (id, credenciales) => {
     const response = await fetch(`${API_URL}properties/${id}`, {
         method: "PUT",

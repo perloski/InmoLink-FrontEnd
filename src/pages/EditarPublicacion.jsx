@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../componentes/Navbar';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { obtenerPropiedad, editarPropiedades } from '../servicios/propiedad.service';
+import { obtenerPropiedad, editarPropiedades, eliminarPropiedad } from '../servicios/propiedad.service';
 import SelectorServicios from '../componentesPropiedades/moleculas/SelectorServicios';
 import GaleriaFotos from '../componentesPropiedades/moleculas/GaleriaFotos';
 import Mapa from '../componentesPropiedades/moleculas/Mapa';
@@ -16,6 +16,8 @@ export default function EditarPublicacion() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -96,6 +98,19 @@ export default function EditarPublicacion() {
       ...prev,
       coordenadas: { lat: e.latlng.lat, lng: e.latlng.lng }
     }));
+  };
+
+  const onDelete = async () => {
+    setDeleting(true);
+    try {
+      await eliminarPropiedad(id);
+      navigate('/perfil/mis-casas');
+    } catch (err) {
+      setError(err.message);
+      setShowConfirmModal(false);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const onSave = async (e) => {
@@ -244,15 +259,22 @@ export default function EditarPublicacion() {
             <div className="flex flex-col-reverse md:flex-row gap-6 pt-10 border-t border-gray-50">
               <button
                 type="button"
+                onClick={() => setShowConfirmModal(true)}
+                className="w-full md:w-1/4 py-5 px-6 rounded-full bg-red-600 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-red-700 transition-all"
+              >
+                Eliminar
+              </button>
+              <button
+                type="button"
                 onClick={() => navigate('/perfil/mis-casas')}
-                className="w-full md:w-1/3 py-5 px-6 rounded-full border border-gray-100 text-gray-400 font-bold text-[10px] uppercase tracking-widest hover:text-black hover:bg-gray-50"
+                className="w-full md:w-1/4 py-5 px-6 rounded-full border border-gray-100 text-gray-400 font-bold text-[10px] uppercase tracking-widest hover:text-black hover:bg-gray-50"
               >
                 Descartar
               </button>
               <button
                 type="submit"
                 disabled={loading || uploading}
-                className="w-full md:w-2/3 bg-black text-white font-bold text-[10px] uppercase tracking-[0.2em] py-5 px-6 rounded-full hover:bg-gray-800 shadow-xl disabled:opacity-50"
+                className="w-full md:w-2/4 bg-black text-white font-bold text-[10px] uppercase tracking-[0.2em] py-5 px-6 rounded-full hover:bg-gray-800 shadow-xl disabled:opacity-50"
               >
                 {loading || uploading ? 'Guardando...' : 'Guardar Modificaciones'}
               </button>
@@ -260,6 +282,38 @@ export default function EditarPublicacion() {
           </form>
         </div>
       </div>
+
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-[100]">
+          <div className="bg-white rounded-[2.5rem] p-12 w-full max-w-md border border-gray-50 shadow-xl">
+            <p className="text-gray-900 mb-8 text-center text-3xl font-['Cormorant_Garamond'] font-bold leading-tight">
+              {deleting ? "Eliminando..." : "Eliminar publicacion? Esta accion no se puede deshacer."}
+            </p>
+            <div className="flex flex-col space-y-4">
+              <button
+                onClick={onDelete}
+                disabled={deleting}
+                className={`w-full py-4 text-white rounded-full font-bold text-[10px] uppercase tracking-[0.2em] transition-all
+                  ${deleting
+                    ? 'bg-red-300 cursor-not-allowed'
+                    : 'bg-red-600 hover:bg-red-700 transform hover:-translate-y-0.5 luxury-shadow'}`}
+              >
+                {deleting ? "Por favor espere..." : "Eliminar"}
+              </button>
+              <button
+                onClick={() => setShowConfirmModal(false)}
+                disabled={deleting}
+                className={`w-full py-4 rounded-full font-bold text-[10px] uppercase tracking-[0.2em] transition-all
+                  ${deleting
+                    ? 'text-gray-300 cursor-not-allowed'
+                    : 'text-gray-400 hover:text-black hover:bg-gray-50'}`}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
